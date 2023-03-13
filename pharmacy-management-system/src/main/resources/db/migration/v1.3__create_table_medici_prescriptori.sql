@@ -1,5 +1,5 @@
 -- Crearea tabelului MEDICI_PRESCRIPTORI
-CREATE TABLE MEDICI_PRESCRIPTORI (
+CREATE TABLE medici_prescriptori (
                                      parafa_medic_prescriptor DECIMAL(5, 0),
                                      CONSTRAINT MEDP_par_medp_PK PRIMARY KEY (parafa_medic_prescriptor),
                                      unitate_medicala VARCHAR(50) NOT NULL,

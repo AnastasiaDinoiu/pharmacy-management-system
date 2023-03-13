@@ -1,5 +1,5 @@
 -- Crearea tabelului ANGAJATI
-CREATE TABLE ANGAJATI (
+CREATE TABLE angajati (
                           id_angajat DECIMAL(5, 0),
                           CONSTRAINT ANG_id_ang_PK PRIMARY KEY (id_angajat),
                           nume VARCHAR(20)  NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE ANGAJATI (
                           CONSTRAINT ANG_cnp_UK UNIQUE (cnp),
                           CONSTRAINT ANG_cnp_C CHECK (LENGTH(cnp)=13),
                           id_post DECIMAL(5, 0),
-                          CONSTRAINT ANG_id_post_FK FOREIGN KEY (id_post) REFERENCES POSTURI (id_post) ON DELETE SET NULL,
+                          CONSTRAINT ANG_id_post_FK FOREIGN KEY (id_post) REFERENCES posturi (id_post) ON DELETE SET NULL,
                           email VARCHAR(30) NOT NULL,
                           CONSTRAINT ANG_email_UK UNIQUE (email),
                           telefon VARCHAR(10) NOT NULL,

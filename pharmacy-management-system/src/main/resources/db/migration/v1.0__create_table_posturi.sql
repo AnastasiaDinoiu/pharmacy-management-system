@@ -1,5 +1,5 @@
 -- Crearea tabelului POSTURI
-CREATE TABLE POSTURI (
+CREATE TABLE posturi (
                          id_post DECIMAL(5, 0),
                          CONSTRAINT POST_id_post_PK PRIMARY KEY (id_post),
                          denumire_post VARCHAR(20) NOT NULL,
