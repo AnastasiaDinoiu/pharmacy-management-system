@@ -1,6 +1,6 @@
 -- Crearea tabelului POSTURI
 CREATE TABLE posturi (
-                         id_post DECIMAL(5, 0),
+                         id_post INT NOT NULL AUTO_INCREMENT,
                          CONSTRAINT POST_id_post_PK PRIMARY KEY (id_post),
                          denumire_post VARCHAR(20) NOT NULL,
                          CONSTRAINT POST_den_post_UK UNIQUE (denumire_post),

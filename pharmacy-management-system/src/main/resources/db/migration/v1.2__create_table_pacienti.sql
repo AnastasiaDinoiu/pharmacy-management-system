@@ -1,6 +1,6 @@
 -- Crearea tabelului PACIENTI
 CREATE TABLE pacienti (
-                          id_pacient DECIMAL(5, 0),
+                          id_pacient INT NOT NULL AUTO_INCREMENT,
                           CONSTRAINT PAC_id_pac_PK PRIMARY KEY (id_pacient),
                           nume VARCHAR(20) NOT NULL,
                           prenume VARCHAR(30) NOT NULL,

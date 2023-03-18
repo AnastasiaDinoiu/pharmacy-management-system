@@ -1,6 +1,6 @@
 -- Crearea tabelului MEDICI_PRESCRIPTORI
 CREATE TABLE medici_prescriptori (
-                                     parafa_medic_prescriptor DECIMAL(5, 0),
+                                     parafa_medic_prescriptor INT NOT NULL AUTO_INCREMENT,
                                      CONSTRAINT MEDP_par_medp_PK PRIMARY KEY (parafa_medic_prescriptor),
                                      unitate_medicala VARCHAR(50) NOT NULL,
                                      nume VARCHAR(20) NOT NULL,
