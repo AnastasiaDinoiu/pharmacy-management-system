@@ -4,11 +4,11 @@ import com.bdproject.pharmacy.model.DiagnoseEntity;
 
 import java.util.List;
 
-public interface DiagnosesService {
+public interface DiagnoseService {
 
-    DiagnoseEntity createDiagnose(String numeDiagnostic);
+    Integer createDiagnose(String numeDiagnostic);
 
-    DiagnoseEntity updateDiagnose(DiagnoseEntity diagnoseRequest);
+    Integer updateDiagnose(Integer idDiagnostic, String numeDiagnostic);
 
     void deleteDiagnose(Integer idDiagnostic);
 

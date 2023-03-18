@@ -4,10 +4,9 @@ import com.bdproject.pharmacy.exception.ErrorCodes;
 import com.bdproject.pharmacy.exception.ServiceException;
 import com.bdproject.pharmacy.model.DiagnoseEntity;
 import com.bdproject.pharmacy.repository.DiagnoseRepository;
-import com.bdproject.pharmacy.service.DiagnosesService;
+import com.bdproject.pharmacy.service.DiagnoseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,13 +19,12 @@ import java.util.Objects;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class DiagnosesServiceImpl implements DiagnosesService {
+public class DiagnoseServiceImpl implements DiagnoseService {
 
-    @Autowired
     private final DiagnoseRepository diagnoseRepository;
 
     @Override
-    public DiagnoseEntity createDiagnose(String numeDiagnostic) {
+    public Integer createDiagnose(String numeDiagnostic) {
         if (Objects.isNull(numeDiagnostic)) {
             log.error("numeDiagnostic is not set on create request");
             throw new ServiceException(ErrorCodes.MISSING_PARAMETER,
@@ -35,18 +33,18 @@ public class DiagnosesServiceImpl implements DiagnosesService {
         DiagnoseEntity diagnose = new DiagnoseEntity();
         diagnose.setNumeDiagnostic(numeDiagnostic);
 
-        return diagnoseRepository.save(diagnose);
+        return diagnoseRepository.save(diagnose).getIdDiagnostic();
     }
 
     @Override
-    public DiagnoseEntity updateDiagnose(DiagnoseEntity diagnoseRequest) {
-        validateParametersForUpdate(diagnoseRequest);
+    public Integer updateDiagnose(Integer idDiagnostic, String numeDiagnostic) {
+        validateParameters(idDiagnostic, numeDiagnostic);
 
-        DiagnoseEntity diagnose = new DiagnoseEntity();
-        diagnose.setIdDiagnostic(diagnoseRequest.getIdDiagnostic());
-        diagnose.setNumeDiagnostic(diagnoseRequest.getNumeDiagnostic());
+        DiagnoseEntity updatedDiagnose = new DiagnoseEntity();
+        updatedDiagnose.setIdDiagnostic(idDiagnostic);
+        updatedDiagnose.setNumeDiagnostic(numeDiagnostic);
 
-        return diagnoseRepository.save(diagnose);
+        return diagnoseRepository.save(updatedDiagnose).getIdDiagnostic();
     }
 
     @Override
@@ -76,18 +74,18 @@ public class DiagnosesServiceImpl implements DiagnosesService {
         return diagnoseRepository.findAll();
     }
 
-    private void validateParametersForUpdate(DiagnoseEntity diagnoseRequest) {
-        if (Objects.isNull(diagnoseRequest.getIdDiagnostic())) {
+    private void validateParameters(Integer idDiagnostic, String numeDiagnostic) {
+        if (Objects.isNull(idDiagnostic)) {
             log.error("idDiagnostic is not set on update request");
             throw new ServiceException(ErrorCodes.MISSING_PARAMETER,
                     MessageFormat.format(ErrorCodes.MISSING_PARAMETER.getErrorMessage(), "idDiagnostic"));
         }
-        diagnoseRepository.findById(diagnoseRequest.getIdDiagnostic()).orElseThrow(() -> {
-            log.error("idDiagnostic {} is invalid", diagnoseRequest.getIdDiagnostic());
+        diagnoseRepository.findById(idDiagnostic).orElseThrow(() -> {
+            log.error("idDiagnostic {} is invalid", idDiagnostic);
             throw new ServiceException(ErrorCodes.INVALID_PARAMETER,
                     MessageFormat.format(ErrorCodes.INVALID_PARAMETER.getErrorMessage(), "idDiagnostic"));
         });
-        if (Objects.isNull(diagnoseRequest.getNumeDiagnostic())) {
+        if (Objects.isNull(numeDiagnostic)) {
             log.error("numeDiagnostic is not set on update request");
             throw new ServiceException(ErrorCodes.MISSING_PARAMETER,
                     MessageFormat.format(ErrorCodes.MISSING_PARAMETER.getErrorMessage(), "numeDiagnostic"));
