@@ -12,7 +12,6 @@ import com.bdproject.pharmacy.repository.RecipeRepository;
 import com.bdproject.pharmacy.service.RecipeMedicineService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +24,10 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class RecipeMedicineServiceImpl implements RecipeMedicineService {
-    @Autowired
-    RecipeMedicineRepository recipeMedicineRepository;
-    @Autowired
-    RecipeRepository recipeRepository;
-    @Autowired
-    MedicineRepository medicineRepository;
+
+    private final RecipeMedicineRepository recipeMedicineRepository;
+    private final RecipeRepository recipeRepository;
+    private final MedicineRepository medicineRepository;
 
     @Override
     public RecipeMedicineResponse insertMedicinesInRecipe(Integer idReteta, List<RecipeMedicineRequest> request) {

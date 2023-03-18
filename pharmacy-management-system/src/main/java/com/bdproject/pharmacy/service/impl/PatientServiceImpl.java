@@ -83,9 +83,9 @@ public class PatientServiceImpl implements PatientService {
     private PatientEntity patientRequestToEntity(PatientRequest request) {
         PatientEntity response = new PatientEntity();
 
-        response.setNumePacient(response.getNumePacient());
-        response.setPrenumePacient(response.getPrenumePacient());
-        response.setCnpPacient(response.getCnpPacient());
+        response.setNumePacient(request.getNume());
+        response.setPrenumePacient(request.getPrenume());
+        response.setCnpPacient(request.getCnp());
 
         return response;
     }

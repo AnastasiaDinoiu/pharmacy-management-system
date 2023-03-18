@@ -7,5 +7,5 @@ public class PatientRequest {
 
     private String nume;
     private String prenume;
-    private String cnp;
+    private Long cnp;
 }

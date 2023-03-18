@@ -1,6 +1,7 @@
 package com.bdproject.pharmacy.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -11,19 +12,19 @@ import java.util.Objects;
 @Table(name = "retete_medicamente", schema = "pharmacy")
 @Getter
 @Setter
-@Embeddable
+@NoArgsConstructor
 public class RecipeMedicineEntity implements Serializable {
 
-    @EmbeddedId
-    private RecipeMedicineId id;
+    @Id
+    @Column(name = "id_rm")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne
-    @MapsId("idReteta")
     @JoinColumn(name = "id_reteta")
     private RecipeEntity reteta;
 
     @ManyToOne
-    @MapsId("idMedicament")
     @JoinColumn(name = "id_medicament")
     private MedicineEntity medicament;
 
@@ -46,7 +47,8 @@ public class RecipeMedicineEntity implements Serializable {
     @Override
     public String toString() {
         return "RecipeMedicineEntity{" +
-                "reteta=" + reteta +
+                "id=" + id +
+                ", reteta=" + reteta +
                 ", medicament=" + medicament +
                 ", numarMedicamente=" + numarMedicamente +
                 '}';
