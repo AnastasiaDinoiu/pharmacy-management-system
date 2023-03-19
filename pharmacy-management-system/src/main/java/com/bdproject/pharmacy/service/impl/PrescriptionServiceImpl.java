@@ -1,11 +1,11 @@
 package com.bdproject.pharmacy.service.impl;
 
-import com.bdproject.pharmacy.dto.request.RecipeRequest;
+import com.bdproject.pharmacy.dto.request.PrescriptionRequest;
 import com.bdproject.pharmacy.exception.ErrorCodes;
 import com.bdproject.pharmacy.exception.ServiceException;
-import com.bdproject.pharmacy.model.RecipeEntity;
+import com.bdproject.pharmacy.model.PrescriptionEntity;
 import com.bdproject.pharmacy.repository.*;
-import com.bdproject.pharmacy.service.RecipeService;
+import com.bdproject.pharmacy.service.PrescriptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,54 +19,54 @@ import java.util.Objects;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class RecipeServiceImpl implements RecipeService {
+public class PrescriptionServiceImpl implements PrescriptionService {
 
-    private final RecipeRepository recipeRepository;
+    private final PrescriptionRepository prescriptionRepository;
     private final EmployeeRepository employeeRepository;
     private final PatientRepository patientRepository;
     private final PrescribingDoctorRepository doctorRepository;
     private final DiagnoseRepository diagnoseRepository;
 
     @Override
-    public Integer createRecipe(RecipeRequest request) {
+    public Integer createPrescription(PrescriptionRequest request) {
         validateParameters(request);
 
-        return recipeRepository.save(recipeRequestToEntity(request)).getIdReteta();
+        return prescriptionRepository.save(prescriptionRequestToEntity(request)).getIdPrescriptie();
     }
 
     @Override
-    public Integer updateRecipe(Integer idReteta, RecipeRequest request) {
-        validateId(idReteta);
+    public Integer updatePrescription(Integer idPrescriptie, PrescriptionRequest request) {
+        validateId(idPrescriptie);
         validateParameters(request);
-        var updatedRecipe = recipeRequestToEntity(request);
-        updatedRecipe.setIdReteta(idReteta);
+        var updatedPrescription = prescriptionRequestToEntity(request);
+        updatedPrescription.setIdPrescriptie(idPrescriptie);
 
-        return recipeRepository.save(updatedRecipe).getIdReteta();
+        return prescriptionRepository.save(updatedPrescription).getIdPrescriptie();
     }
 
     @Override
-    public void deleteRecipe(Integer idReteta) {
-        validateId(idReteta);
-        recipeRepository.deleteById(idReteta);
+    public void deletePrescription(Integer idPrescriptie) {
+        validateId(idPrescriptie);
+        prescriptionRepository.deleteById(idPrescriptie);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public RecipeEntity getRecipeById(Integer idReteta) {
-        return recipeRepository.findById(idReteta).orElseThrow(() -> {
-            log.error("idReteta {} is invalid", idReteta);
+    public PrescriptionEntity getPrescriptionById(Integer idPrescriptie) {
+        return prescriptionRepository.findById(idPrescriptie).orElseThrow(() -> {
+            log.error("idPrescriptie {} is invalid", idPrescriptie);
             throw new ServiceException(ErrorCodes.INVALID_PARAMETER,
-                    MessageFormat.format(ErrorCodes.INVALID_PARAMETER.getErrorMessage(), "idReteta"));
+                    MessageFormat.format(ErrorCodes.INVALID_PARAMETER.getErrorMessage(), "idPrescriptie"));
         });
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<RecipeEntity> getRecipes() {
-        return recipeRepository.findAll();
+    public List<PrescriptionEntity> getPrescriptions() {
+        return prescriptionRepository.findAll();
     }
 
-    private void validateParameters(RecipeRequest request) {
+    private void validateParameters(PrescriptionRequest request) {
         if (Objects.isNull(request.getIdPacient())) {
             log.error("idPacient is not set on request");
             throw new ServiceException(ErrorCodes.MISSING_PARAMETER,
@@ -119,8 +119,8 @@ public class RecipeServiceImpl implements RecipeService {
         }
     }
 
-    private RecipeEntity recipeRequestToEntity(RecipeRequest request) {
-        RecipeEntity response = new RecipeEntity();
+    private PrescriptionEntity prescriptionRequestToEntity(PrescriptionRequest request) {
+        PrescriptionEntity response = new PrescriptionEntity();
 
         var patient = patientRepository.findById(request.getIdPacient());
         patient.ifPresent(response::setPacient);
@@ -136,11 +136,11 @@ public class RecipeServiceImpl implements RecipeService {
         return response;
     }
 
-    private void validateId(Integer idReteta) {
-        recipeRepository.findById(idReteta).orElseThrow(() -> {
-            log.error("idReteta {} is invalid", idReteta);
+    private void validateId(Integer idPrescriptie) {
+        prescriptionRepository.findById(idPrescriptie).orElseThrow(() -> {
+            log.error("idPrescriptie {} is invalid", idPrescriptie);
             throw new ServiceException(ErrorCodes.INVALID_PARAMETER,
-                    MessageFormat.format(ErrorCodes.INVALID_PARAMETER.getErrorMessage(), "idReteta"));
+                    MessageFormat.format(ErrorCodes.INVALID_PARAMETER.getErrorMessage(), "idPrescriptie"));
         });
     }
 }

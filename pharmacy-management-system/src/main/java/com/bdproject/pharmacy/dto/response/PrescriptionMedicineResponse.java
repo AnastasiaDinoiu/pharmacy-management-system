@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class RecipeMedicineResponse {
+public class PrescriptionMedicineResponse {
 
     List<Integer> savedMedicines;
     List<Integer> unsavedMedicines;

@@ -13,7 +13,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RecipeMedicineEntity implements Serializable {
+public class PrescriptionMedicineEntity implements Serializable {
 
     @Id
     @Column(name = "id_rm")
@@ -22,7 +22,7 @@ public class RecipeMedicineEntity implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_reteta")
-    private RecipeEntity reteta;
+    private PrescriptionEntity prescriptie;
 
     @ManyToOne
     @JoinColumn(name = "id_medicament")
@@ -35,7 +35,7 @@ public class RecipeMedicineEntity implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RecipeMedicineEntity that = (RecipeMedicineEntity) o;
+        PrescriptionMedicineEntity that = (PrescriptionMedicineEntity) o;
         return Objects.equals(id, that.id);
     }
 
@@ -46,9 +46,9 @@ public class RecipeMedicineEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "RecipeMedicineEntity{" +
+        return "PrescriptionMedicineEntity{" +
                 "id=" + id +
-                ", reteta=" + reteta +
+                ", prescriptie=" + prescriptie +
                 ", medicament=" + medicament +
                 ", numarMedicamente=" + numarMedicamente +
                 '}';

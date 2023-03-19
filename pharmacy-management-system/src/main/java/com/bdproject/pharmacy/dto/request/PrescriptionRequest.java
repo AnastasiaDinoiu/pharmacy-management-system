@@ -5,7 +5,7 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
-public class RecipeRequest {
+public class PrescriptionRequest {
 
     private Integer idPacient;
     private Integer idDiagnostic;

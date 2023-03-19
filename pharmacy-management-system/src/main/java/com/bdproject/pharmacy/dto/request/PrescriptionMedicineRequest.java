@@ -3,7 +3,7 @@ package com.bdproject.pharmacy.dto.request;
 import lombok.Getter;
 
 @Getter
-public class RecipeMedicineRequest {
+public class PrescriptionMedicineRequest {
 
     private Integer idMedicament;
     private Integer nrMedicamente;

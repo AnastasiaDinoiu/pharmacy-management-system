@@ -14,12 +14,12 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RecipeEntity implements Serializable {
+public class PrescriptionEntity implements Serializable {
 
     @Id
     @Column(name = "id_reteta")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idReteta;
+    private Integer idPrescriptie;
 
     @ManyToOne
     @JoinColumn(name = "id_pacient")
@@ -47,19 +47,19 @@ public class RecipeEntity implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        RecipeEntity that = (RecipeEntity) o;
-        return Objects.equals(idReteta, that.idReteta);
+        PrescriptionEntity that = (PrescriptionEntity) o;
+        return Objects.equals(idPrescriptie, that.idPrescriptie);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idReteta);
+        return Objects.hash(idPrescriptie);
     }
 
     @Override
     public String toString() {
-        return "RecipeEntity{" +
-                "idReteta=" + idReteta +
+        return "PrescriptionEntity{" +
+                "idPrescriptie=" + idPrescriptie +
                 ", pacient=" + pacient +
                 ", diagnostic=" + diagnostic +
                 ", angajat=" + angajat +
