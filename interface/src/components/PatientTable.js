@@ -1,22 +1,30 @@
 import {useEffect, useState} from "react";
-import {Button, Container, Table} from "react-bootstrap";
+import {Button, Container, Modal, Table} from "react-bootstrap";
 import axiosClient from "../utils/axiosClient";
 import "./style.css"
+import TransitionModal from "./TransitionModal";
+
+export const getPatients = async () => {
+    try {
+        const {data} = await axiosClient().get("/patients");
+        return data;
+    } catch (err) {
+        console.error(err);
+        return [];
+    }
+}
 
 export default function PatientTable() {
     const [patients, setPatients] = useState([])
+    const [showMessage, setShowMessage] = useState(false);
+    const [showError, setShowError] = useState(false);
     const [message, setMessage] = useState("")
     const [error, setError] = useState("")
 
     useEffect(() => {
-        (async function getPatients() {
-            try {
-                const {data} = await axiosClient().get('/patients')
-                setPatients(data)
-                console.log(data)
-            } catch (err) {
-                console.error(err)
-            }
+        (async function fetchPatients() {
+            const patientsData = await getPatients();
+            setPatients(patientsData);
         })()
     }, [])
 
@@ -26,39 +34,37 @@ export default function PatientTable() {
             if (status === 200) {
                 setPatients(patients.filter(patient => patient.idPacient !== id))
                 setMessage(`Patient with ${id} id was successfully removed!`)
-                setTimeout(() => setMessage(''), 3000)
+                setShowMessage(true);
             } else {
                 setError(`Patient with ${id} id not found!`)
-                setTimeout(() => setMessage(''), 3000)
+                setShowError(true);
             }
         } catch (err) {
             setError('Server error')
-            setTimeout(() => setMessage(''), 3000)
+            setShowError(true);
         }
     }
 
+
     return (
         <>
-            {
-                message ?
-                    <div className="message">
-                        <p>
-                            {message}
-                            <span className="closeNotification" onClick={() => setMessage('')}>x</span>
-                        </p>
-                    </div> : null
-            }
-            {
-                error ?
-                    <div className="error">
-                        <p>
-                            {error}
-                            <span className="closeNotification closeNotificationErr"
-                                  onClick={() => setError('')}>x</span>
-                        </p>
-                    </div> : null
-            }
-            <Container style={{paddingTop: '30px'}}>
+            <Modal className="messageModal" show={showMessage} onHide={() => setShowMessage(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Message</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{message}</Modal.Body>
+            </Modal>
+
+            <Modal className="errorModal" show={showError} onHide={() => setShowError(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Error</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{error}</Modal.Body>
+            </Modal>
+
+            <TransitionModal table={"patients"} setPatients={setPatients}/>
+
+            <Container style={{paddingTop: '20px'}}>
                 <Table striped bordered hover>
                     <thead>
                     <tr>

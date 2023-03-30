@@ -65,3 +65,37 @@
     background-color: #00727c !important;
     border-color: #00727c !important;
 }
+
+.addButton {
+    width: 80px;
+}
+
+#dropdown-gen {
+    position: absolute;
+    left: 12px;
+    background-color: #FAC34C;
+    border-color: #FAC34C;
+    color: white;
+}
+
+#dropdown-gen:hover {
+    position: absolute;
+    left: 12px;
+    background-color: #db9706;
+    border-color: #db9706;
+    color: white;
+}
+
+.messageModal {
+    color: #00727c;
+}
+
+.errorModal {
+    color: #931017;
+}
+
+.transitionModal {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}

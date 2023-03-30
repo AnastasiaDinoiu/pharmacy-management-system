@@ -7,6 +7,9 @@ export default function AddPatient() {
     const [nume, setNume] = useState('')
     const [prenume, setPrenume] = useState('')
     const [cnp, setCnp] = useState('')
+
+    const [showMessage, setShowMessage] = useState(false);
+    const [showError, setShowError] = useState(false);
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
 
@@ -14,19 +17,20 @@ export default function AddPatient() {
         event.preventDefault()
         if (nume.length < 3) {
             setError('Numele trebuie sa aiba minim 3 caractere')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
             return
         }
-        if (prenume.length < 5) {
+        if (prenume.length < 3) {
             setError('Prenumele trebuie sa aiba minim 3 caractere')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
             return
         }
         if (cnp.length !== 13) {
             setError('CNP invalid')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
             return
         }
+
         try {
             const response = await axiosClient().post('/patients', {
                 nume,
@@ -38,16 +42,14 @@ export default function AddPatient() {
                 setNume('')
                 setPrenume('')
                 setCnp('')
-                // eslint-disable-next-line no-restricted-globals
-                history.goBack()
-                setTimeout(() => setMessage(''), 3000)
+                setShowMessage(true);
             } else {
                 setError('Database error')
-                setTimeout(() => setError(''), 3000)
+                setShowError(true);
             }
         } catch (err) {
             setError('Database error')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
         }
     }
 
@@ -60,8 +62,12 @@ export default function AddPatient() {
                 setPrenume={setPrenume}
                 cnp={cnp}
                 setCnp={setCnp}
+                showMessage={showMessage}
+                setShowMessage={setShowMessage}
                 message={message}
                 setMessage={setMessage}
+                showError={showError}
+                setShowError={setShowError}
                 error={error}
                 setError={setError}
                 handleSubmit={handleSubmit}

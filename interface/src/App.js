@@ -6,6 +6,8 @@ import NoPage from "./pages/NoPage";
 import AddPatient from "./pages/AddPatient";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import UpdatePatient from "./pages/UpdatePatient";
+import AddEmployee from "./pages/AddEmployee";
+import UpdateEmployee from "./pages/UpdateEmployee";
 
 function App() {
     return (
@@ -16,6 +18,8 @@ function App() {
                         <Route index element={<Home/>}/>
                         <Route path="add-patient" element={<AddPatient/>}/>
                         <Route path="patients/:id" element={<UpdatePatient/>}/>
+                        <Route path="add-employee" element={<AddEmployee/>}/>
+                        <Route path="employees/:id" element={<UpdateEmployee/>}/>
                         <Route path="*" element={<NoPage/>}/>
                     </Route>
                 </Routes>

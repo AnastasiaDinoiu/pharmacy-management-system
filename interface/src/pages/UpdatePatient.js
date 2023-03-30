@@ -3,12 +3,15 @@ import "../components/style.css"
 import PatientForm from "../components/PatientForm"
 import axiosClient from "../utils/axiosClient";
 
-export default function AddPatient() {
+export default function UpdatePatient() {
     const url = window.location.href.split('/')
     const id = url[url.length - 1]
     const [nume, setNume] = useState('')
     const [prenume, setPrenume] = useState('')
-    const [cnp, setCnp] = useState(0)
+    const [cnp, setCnp] = useState('')
+
+    const [showMessage, setShowMessage] = useState(false);
+    const [showError, setShowError] = useState(false);
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
 
@@ -32,20 +35,21 @@ export default function AddPatient() {
 
         if (nume.length < 3) {
             setError('Numele trebuie sa aiba minim 3 caractere')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
             return
         }
         if (prenume.length < 5) {
             setError('Prenumele trebuie sa aiba minim 3 caractere')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
             return
         }
         let strCnp = cnp.toString()
         if (strCnp.length !== 13) {
             setError('CNP invalid')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
             return
         }
+
         try {
             const response = await axiosClient().put(`/patients/${id}`, {
                 nume,
@@ -53,18 +57,18 @@ export default function AddPatient() {
                 cnp
             })
             if (response.status === 200) {
-                setMessage('Pacientul a fost inregistrat!')
+                setMessage('Datele pacientului au fost modificate!')
                 setNume('')
                 setPrenume('')
-                setCnp('')
-                setTimeout(() => setMessage(''), 3000)
+                setCnp(0)
+                setShowMessage(true);
             } else {
                 setError('Database error')
-                setTimeout(() => setError(''), 3000)
+                setShowError(true);
             }
         } catch (err) {
             setError('Database error')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
         }
     }
 
@@ -77,8 +81,12 @@ export default function AddPatient() {
                 setPrenume={setPrenume}
                 cnp={cnp}
                 setCnp={setCnp}
+                showMessage={showMessage}
+                setShowMessage={setShowMessage}
                 message={message}
                 setMessage={setMessage}
+                showError={showError}
+                setShowError={setShowError}
                 error={error}
                 setError={setError}
                 handleSubmit={handleSubmit}

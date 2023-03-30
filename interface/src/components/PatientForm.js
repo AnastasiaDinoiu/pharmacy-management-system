@@ -1,31 +1,42 @@
-import {Button, Container, FormGroup} from "react-bootstrap";
+import {Button, Container, FormGroup, Modal} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import "../components/style.css"
 
 export default function PatientForm(props) {
-    const { nume, setNume, prenume, setPrenume, cnp, setCnp, message, setMessage, error, setError, handleSubmit } = props;
+    const {
+        nume,
+        setNume,
+        prenume,
+        setPrenume,
+        cnp,
+        setCnp,
+        showMessage,
+        setShowMessage,
+        message,
+        setMessage,
+        showError,
+        setShowError,
+        error,
+        setError,
+        handleSubmit
+    } = props;
 
     return (
         <>
-            {
-                message ?
-                    <div className="message">
-                        <p>
-                            {message}
-                            <span className="closeNotification" onClick={() => setMessage('')}>x</span>
-                        </p>
-                    </div> : null
-            }
-            {
-                error ?
-                    <div className="error">
-                        <p>
-                            {error}
-                            <span className="closeNotification closeNotificationErr"
-                                  onClick={() => setError('')}>x</span>
-                        </p>
-                    </div> : null
-            }
+            <Modal className="messageModal" show={showMessage} onHide={() => setShowMessage(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Message</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{message}</Modal.Body>
+            </Modal>
+
+            <Modal className="errorModal" show={showError} onHide={() => setShowError(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Error</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{error}</Modal.Body>
+            </Modal>
+
             <Container style={{paddingTop: '50px'}}>
                 <Form onSubmit={handleSubmit}>
                     <FormGroup className="mb-3" controlId="formNume">

@@ -1,23 +1,24 @@
-import Form from 'react-bootstrap/Form';
-import {useState} from "react";
-import {Container} from "react-bootstrap";
+import React, {useState} from "react";
+import {Container, Dropdown, DropdownButton, FormGroup} from "react-bootstrap";
 import PatientTable from "./PatientTable";
 import EmployeeTable from "./EmployeeTable";
 import JobTable from "./JobTable";
 
-function TableSelector() {
-    const [tableData, setTableData] = useState(null)
+export default function TableSelector() {
+    const [tableData, setTableData] = useState(<PatientTable/>)
+    const [dropdownTitle, setDropdownTitle] = useState('Alege postul')
+    const tables = ["Pacienti", "Angajati", "Posturi"]
 
-    function handleTableSelect(event) {
+    function handleTableSelect(table) {
         // eslint-disable-next-line default-case
-        switch (event.target.value.toLowerCase()) {
-            case "patients":
+        switch (table) {
+            case "Pacienti":
                 setTableData(<PatientTable/>)
                 break;
-            case "employees":
+            case "Angajati":
                 setTableData(<EmployeeTable/>)
                 break;
-            case "jobs":
+            case "Posturi":
                 setTableData(<JobTable/>)
                 break;
         }
@@ -25,17 +26,23 @@ function TableSelector() {
 
     return (
         <>
-            <Form.Select aria-label="Default select example" onChange={handleTableSelect}>
-                <option>Alege un tabel</option>
-                <option value="patients">Pacienti</option>
-                <option value="employees">Angajati</option>
-                <option value="jobs">Posturi</option>
-            </Form.Select>
             <Container>
+                <FormGroup className="mb-3" controlId="formPost">
+                    <DropdownButton id="dropdown-gen" title={dropdownTitle}>
+                        {tables.map((table => (
+                            <Dropdown.Item key={table}
+                                           onClick={() => {
+                                               setDropdownTitle(table)
+                                               handleTableSelect(table)
+                                           }}>
+                                {table}
+                            </Dropdown.Item>
+                        )))
+                        }
+                    </DropdownButton>
+                </FormGroup>
                 {tableData}
             </Container>
         </>
     );
 }
-
-export default TableSelector;
