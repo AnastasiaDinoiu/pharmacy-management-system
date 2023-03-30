@@ -62,7 +62,7 @@ export default function PatientTable() {
                 <Modal.Body>{error}</Modal.Body>
             </Modal>
 
-            <TransitionModal table={"patients"} setPatients={setPatients}/>
+            <TransitionModal table={"patients"} setObjects={setPatients}/>
 
             <Container style={{paddingTop: '20px'}}>
                 <Table striped bordered hover>

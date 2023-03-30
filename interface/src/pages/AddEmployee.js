@@ -9,6 +9,9 @@ export default function AddEmployee() {
     const [idPost, setIdPost] = useState(0)
     const [email, setEmail] = useState('')
     const [telefon, setTelefon] = useState('')
+
+    const [showMessage, setShowMessage] = useState(false);
+    const [showError, setShowError] = useState(false);
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
 
@@ -16,34 +19,34 @@ export default function AddEmployee() {
         event.preventDefault()
         if (nume.length < 3) {
             setError('Numele trebuie sa aiba minim 3 caractere')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
             return
         }
         if (prenume.length < 3) {
             setError('Prenumele trebuie sa aiba minim 3 caractere')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
             return
         }
-        if (cnp.length !== 13) {
+        let strCnp = cnp.toString()
+        if (strCnp.length !== 13) {
             setError('CNP invalid')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
             return
         }
-        console.log(idPost)
         const data = await axiosClient().get(`/jobs/${idPost}`)
         if (!data) {
             setError('Post invalid')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
             return
         }
-        if (email.length !== 3) {
+        if (email.length < 3) {
             setError('Email invalid')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
             return
         }
         if (telefon.length !== 10) {
             setError('Numar de telefon invalid')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
             return
         }
 
@@ -61,14 +64,14 @@ export default function AddEmployee() {
                 setNume('')
                 setPrenume('')
                 setCnp('')
-                setTimeout(() => setMessage(''), 3000)
+                setShowMessage(true);
             } else {
                 setError('Database error')
-                setTimeout(() => setError(''), 3000)
+                setShowError(true);
             }
         } catch (err) {
             setError('Database error')
-            setTimeout(() => setError(''), 3000)
+            setShowError(true);
         }
     }
 
@@ -87,6 +90,10 @@ export default function AddEmployee() {
                 setEmail={setEmail}
                 telefon={telefon}
                 setTelefon={setTelefon}
+                showMessage={showMessage}
+                setShowMessage={setShowMessage}
+                showError={showError}
+                setShowError={setShowError}
                 message={message}
                 setMessage={setMessage}
                 error={error}

@@ -1,4 +1,4 @@
-import {Button, Container, Dropdown, DropdownButton, FormGroup} from "react-bootstrap";
+import {Button, Container, Dropdown, DropdownButton, FormGroup, Modal} from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import React, {useEffect, useState} from 'react';
 import axiosClient from "../utils/axiosClient";
@@ -19,6 +19,10 @@ export default function EmployeeForm(props) {
         setEmail,
         telefon,
         setTelefon,
+        showMessage,
+        setShowMessage,
+        showError,
+        setShowError,
         message,
         setMessage,
         error,
@@ -41,25 +45,20 @@ export default function EmployeeForm(props) {
 
     return (
         <>
-            {
-                message ?
-                    <div className="message">
-                        <p>
-                            {message}
-                            <span className="closeNotification" onClick={() => setMessage('')}>x</span>
-                        </p>
-                    </div> : null
-            }
-            {
-                error ?
-                    <div className="error">
-                        <p>
-                            {error}
-                            <span className="closeNotification closeNotificationErr"
-                                  onClick={() => setError('')}>x</span>
-                        </p>
-                    </div> : null
-            }
+            <Modal className="messageModal" show={showMessage} onHide={() => setShowMessage(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Message</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{message}</Modal.Body>
+            </Modal>
+
+            <Modal className="errorModal" show={showError} onHide={() => setShowError(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Error</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{error}</Modal.Body>
+            </Modal>
+
             <Container style={{paddingTop: '50px'}}>
                 <Form onSubmit={handleSubmit}>
                     <FormGroup className="mb-3" controlId="formNume">
@@ -94,9 +93,8 @@ export default function EmployeeForm(props) {
                         <DropdownButton id="dropdown-gen" title={dropdownTitle}>
                             {posturi.map((post => (
                                 // eslint-disable-next-line react/jsx-no-undef
-                                // <Dropdown.Item key={post.idPost} onClick={() => setIdPost(post.idPost)}>
                                 <Dropdown.Item key={post.idPost}
-                                               onClick={(e) => {
+                                               onClick={() => {
                                                    setDropdownTitle(post.numePost)
                                                    setIdPost(post.idPost)
                                                }}>

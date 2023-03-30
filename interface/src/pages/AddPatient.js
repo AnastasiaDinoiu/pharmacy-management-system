@@ -64,10 +64,10 @@ export default function AddPatient() {
                 setCnp={setCnp}
                 showMessage={showMessage}
                 setShowMessage={setShowMessage}
-                message={message}
-                setMessage={setMessage}
                 showError={showError}
                 setShowError={setShowError}
+                message={message}
+                setMessage={setMessage}
                 error={error}
                 setError={setError}
                 handleSubmit={handleSubmit}

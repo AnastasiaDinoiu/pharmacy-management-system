@@ -28,7 +28,7 @@ export default function TableSelector() {
         <>
             <Container>
                 <FormGroup className="mb-3" controlId="formPost">
-                    <DropdownButton id="dropdown-gen" title={dropdownTitle}>
+                    <DropdownButton className="tableSelectButton" id="dropdown-gen" title={dropdownTitle}>
                         {tables.map((table => (
                             <Dropdown.Item key={table}
                                            onClick={() => {

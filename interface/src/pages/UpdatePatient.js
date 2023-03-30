@@ -38,7 +38,7 @@ export default function UpdatePatient() {
             setShowError(true);
             return
         }
-        if (prenume.length < 5) {
+        if (prenume.length < 3) {
             setError('Prenumele trebuie sa aiba minim 3 caractere')
             setShowError(true);
             return
@@ -83,10 +83,10 @@ export default function UpdatePatient() {
                 setCnp={setCnp}
                 showMessage={showMessage}
                 setShowMessage={setShowMessage}
-                message={message}
-                setMessage={setMessage}
                 showError={showError}
                 setShowError={setShowError}
+                message={message}
+                setMessage={setMessage}
                 error={error}
                 setError={setError}
                 handleSubmit={handleSubmit}

@@ -12,10 +12,10 @@ export default function PatientForm(props) {
         setCnp,
         showMessage,
         setShowMessage,
-        message,
-        setMessage,
         showError,
         setShowError,
+        message,
+        setMessage,
         error,
         setError,
         handleSubmit

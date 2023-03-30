@@ -6,6 +6,7 @@ import AddPatient from "../pages/AddPatient";
 import JobTable from "./JobTable";
 import {getPatients} from "./PatientTable";
 import AddEmployee from "../pages/AddEmployee";
+import {getEmployees} from "./EmployeeTable";
 
 const style = {
     position: 'absolute',
@@ -20,13 +21,25 @@ const style = {
 
 export default function TransitionModal(props) {
     const [open, setOpen] = React.useState(false);
+
     const handleOpen = () => setOpen(true);
+
     const handleClose = async () => {
-        const patientsData = await getPatients();
-        setPatients(patientsData);
+        let data
+        switch (table) {
+            case "patients":
+                data = await getPatients();
+                break
+            case "employees":
+                data = await getEmployees();
+                break
+            default:
+                return []
+        }
+        setObjects(data);
         setOpen(false)
     }
-    const {table, setPatients} = props;
+    const {table, setObjects} = props;
 
     function handleTableSelect() {
         // eslint-disable-next-line default-case

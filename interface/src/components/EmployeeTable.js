@@ -1,21 +1,29 @@
 import {useEffect, useState} from "react";
 import axiosClient from "../utils/axiosClient";
-import {Button, Container, Table} from "react-bootstrap";
+import {Button, Container, Modal, Table} from "react-bootstrap";
+import TransitionModal from "./TransitionModal";
+
+export const getEmployees = async () => {
+    try {
+        const {data} = await axiosClient().get('/employees')
+        return data;
+    } catch (err) {
+        console.error(err)
+        return []
+    }
+}
 
 export default function EmployeeTable() {
     const [employees, setEmployees] = useState([])
+    const [showMessage, setShowMessage] = useState(false)
+    const [showError, setShowError] = useState(false)
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
 
     useEffect(() => {
-        (async function getEmployees() {
-            try {
-                const {data} = await axiosClient().get('/employees')
-                setEmployees(data)
-                console.log(data)
-            } catch (err) {
-                console.error(err)
-            }
+        (async function fetchEmployees() {
+            const employeesData = await getEmployees()
+            setEmployees(employeesData)
         })()
     }, [])
 
@@ -25,38 +33,35 @@ export default function EmployeeTable() {
             if (status === 200) {
                 setEmployees(employees.filter(employee => employee.idAngajat !== id))
                 setMessage(`Employee with ${id} id was succesfully removed!`)
-                setTimeout(() => setMessage(''), 3000)
+                setShowMessage(true)
             } else {
                 setError(`Employee with ${id} id not found!`)
-                setTimeout(() => setMessage(''), 3000)
+                setShowError(true)
             }
         } catch (err) {
             setError('Server error')
-            setTimeout(() => setMessage(''), 3000)
+            setShowError(true)
         }
     }
 
     return (
         <>
-            {
-                message ?
-                    <div className="message">
-                        <p>
-                            {message}
-                            <span className="closeNotification" onClick={() => setMessage('')}>x</span>
-                        </p>
-                    </div> : null
-            }
-            {
-                error ?
-                    <div className="error">
-                        <p>
-                            {error}
-                            <span className="closeNotification closeNotificationErr"
-                                  onClick={() => setError('')}>x</span>
-                        </p>
-                    </div> : null
-            }
+            <Modal className="messageModal" show={showMessage} onHide={() => setShowMessage(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Message</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{message}</Modal.Body>
+            </Modal>
+
+            <Modal className="errorModal" show={showError} onHide={() => setShowError(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Error</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>{error}</Modal.Body>
+            </Modal>
+
+            <TransitionModal table={"employees"} setObjects={setEmployees}/>
+
             <Container style={{paddingTop: '20px'}}>
                 <Table striped bordered hover>
                     <thead>

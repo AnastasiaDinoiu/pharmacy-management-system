@@ -70,7 +70,7 @@
     width: 80px;
 }
 
-#dropdown-gen {
+.tableSelectButton #dropdown-gen {
     position: absolute;
     left: 12px;
     background-color: #FAC34C;
@@ -78,7 +78,7 @@
     color: white;
 }
 
-#dropdown-gen:hover {
+.tableSelectButton #dropdown-gen:hover {
     position: absolute;
     left: 12px;
     background-color: #db9706;
