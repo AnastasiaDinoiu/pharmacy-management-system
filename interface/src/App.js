@@ -8,6 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import UpdatePatient from "./pages/UpdatePatient";
 import AddEmployee from "./pages/AddEmployee";
 import UpdateEmployee from "./pages/UpdateEmployee";
+import AddJob from "./pages/AddJob";
+import UpdateJob from "./pages/UpdateJob";
 
 function App() {
     return (
@@ -20,6 +22,8 @@ function App() {
                         <Route path="patients/:id" element={<UpdatePatient/>}/>
                         <Route path="add-employee" element={<AddEmployee/>}/>
                         <Route path="employees/:id" element={<UpdateEmployee/>}/>
+                        <Route path="add-job" element={<AddJob/>}/>
+                        <Route path="jobs/:id" element={<UpdateJob/>}/>
                         <Route path="*" element={<NoPage/>}/>
                     </Route>
                 </Routes>

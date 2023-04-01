@@ -16,13 +16,13 @@ public class DiagnoseController {
     private final DiagnoseService diagnoseService;
 
     @PostMapping(path = "pharmacy/diagnoses")
-    public ResponseEntity<Integer> createDiagnose(@Valid @RequestParam String numeDiagnostic) {
-        return ResponseEntity.ok(diagnoseService.createDiagnose(numeDiagnostic));
+    public ResponseEntity<Integer> createDiagnose(@Valid @RequestParam String nume) {
+        return ResponseEntity.ok(diagnoseService.createDiagnose(nume));
     }
 
     @PutMapping(path = "pharmacy/diagnoses/{id}")
-    public ResponseEntity<Integer> updateDiagnose(@PathVariable Integer id, @Valid @RequestParam String numeDiagnostic) {
-        return ResponseEntity.ok(diagnoseService.updateDiagnose(id, numeDiagnostic));
+    public ResponseEntity<Integer> updateDiagnose(@PathVariable Integer id, @Valid @RequestParam String nume) {
+        return ResponseEntity.ok(diagnoseService.updateDiagnose(id, nume));
     }
 
     @DeleteMapping(path = "pharmacy/diagnoses/{id}")

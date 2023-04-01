@@ -6,7 +6,7 @@ import TransitionModal from "./TransitionModal";
 
 export const getPatients = async () => {
     try {
-        const {data} = await axiosClient().get("/patients");
+        const {data} = await axiosClient().get('/patients');
         return data;
     } catch (err) {
         console.error(err);

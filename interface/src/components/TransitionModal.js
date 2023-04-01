@@ -3,10 +3,11 @@ import {Button, Container} from "react-bootstrap";
 import '@emotion/react';
 import {Backdrop, Box, Fade, Modal} from "@mui/material";
 import AddPatient from "../pages/AddPatient";
-import JobTable from "./JobTable";
+import JobTable, {getJobs} from "./JobTable";
 import {getPatients} from "./PatientTable";
 import AddEmployee from "../pages/AddEmployee";
 import {getEmployees} from "./EmployeeTable";
+import AddJob from "../pages/AddJob";
 
 const style = {
     position: 'absolute',
@@ -33,6 +34,9 @@ export default function TransitionModal(props) {
             case "employees":
                 data = await getEmployees();
                 break
+            case "jobs":
+                data = await getJobs();
+                break
             default:
                 return []
         }
@@ -49,7 +53,7 @@ export default function TransitionModal(props) {
             case "employees":
                 return <AddEmployee/>
             case "jobs":
-                return <JobTable/>
+                return <AddJob/>
             default:
                 return ""
         }

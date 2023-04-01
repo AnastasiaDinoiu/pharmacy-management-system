@@ -1,4 +1,4 @@
-package com.bdproject.Pacientpharmacy.controller;
+package com.bdproject.pharmacy.controller;
 
 import com.bdproject.pharmacy.dto.request.PatientRequest;
 import com.bdproject.pharmacy.model.PatientEntity;

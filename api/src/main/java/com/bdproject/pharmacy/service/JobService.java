@@ -1,14 +1,15 @@
 package com.bdproject.pharmacy.service;
 
+import com.bdproject.pharmacy.dto.request.JobRequest;
 import com.bdproject.pharmacy.model.JobEntity;
 
 import java.util.List;
 
 public interface JobService {
 
-    Integer createJob(String numePost, Integer salariu);
+    Integer createJob(JobRequest request);
 
-    Integer updateJob(Integer idPost, String numePost, Integer salariu);
+    Integer updateJob(Integer idPost, JobRequest request);
 
     void deleteJob(Integer idPost);
 

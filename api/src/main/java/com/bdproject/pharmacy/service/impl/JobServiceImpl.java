@@ -1,5 +1,6 @@
 package com.bdproject.pharmacy.service.impl;
 
+import com.bdproject.pharmacy.dto.request.JobRequest;
 import com.bdproject.pharmacy.exception.ErrorCodes;
 import com.bdproject.pharmacy.exception.ServiceException;
 import com.bdproject.pharmacy.model.JobEntity;
@@ -23,17 +24,17 @@ public class JobServiceImpl implements JobService {
     private final JobRepository jobRepository;
 
     @Override
-    public Integer createJob(String numePost, Integer salariu) {
-        validateParameters(numePost, salariu);
+    public Integer createJob(JobRequest request) {
+        validateParameters(request);
 
-        return jobRepository.save(jobRequestToEntity(numePost, salariu)).getIdPost();
+        return jobRepository.save(jobRequestToEntity(request)).getIdPost();
     }
 
     @Override
-    public Integer updateJob(Integer idPost, String numePost, Integer salariu) {
+    public Integer updateJob(Integer idPost, JobRequest request) {
         validateId(idPost);
-        validateParameters(numePost, salariu);
-        var updatedJob = jobRequestToEntity(numePost, salariu);
+        validateParameters(request);
+        var updatedJob = jobRequestToEntity(request);
         updatedJob.setIdPost(idPost);
 
         return jobRepository.save(updatedJob).getIdPost();
@@ -61,26 +62,26 @@ public class JobServiceImpl implements JobService {
         return jobRepository.findAll();
     }
 
-    private void validateParameters(String numePost, Integer salariu) {
-        if (Objects.isNull(numePost)) {
+    private void validateParameters(JobRequest request) {
+        if (Objects.isNull(request.getNume())) {
             log.error("numePost is not set on request");
             throw new ServiceException(ErrorCodes.MISSING_PARAMETER,
                     MessageFormat.format(ErrorCodes.MISSING_PARAMETER.getErrorMessage(), "numePost"));
         }
-        if (Objects.isNull(salariu)) {
+        if (Objects.isNull(request.getSalariu())) {
             log.error("salariu is not set on request");
             throw new ServiceException(ErrorCodes.MISSING_PARAMETER,
                     MessageFormat.format(ErrorCodes.MISSING_PARAMETER.getErrorMessage(), "salariu"));
         }
     }
 
-    private JobEntity jobRequestToEntity(String numePost, Integer salariu) {
-        JobEntity respone = new JobEntity();
+    private JobEntity jobRequestToEntity(JobRequest request) {
+        JobEntity response = new JobEntity();
 
-        respone.setNumePost(numePost);
-        respone.setSalariu(salariu);
+        response.setNumePost(request.getNume());
+        response.setSalariu(request.getSalariu());
 
-        return respone;
+        return response;
     }
 
     private void validateId(Integer idPost) {

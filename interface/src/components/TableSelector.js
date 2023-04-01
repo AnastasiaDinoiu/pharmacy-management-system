@@ -6,7 +6,7 @@ import JobTable from "./JobTable";
 
 export default function TableSelector() {
     const [tableData, setTableData] = useState(<PatientTable/>)
-    const [dropdownTitle, setDropdownTitle] = useState('Alege postul')
+    const [dropdownTitle, setDropdownTitle] = useState('Alege tabelul')
     const tables = ["Pacienti", "Angajati", "Posturi"]
 
     function handleTableSelect(table) {

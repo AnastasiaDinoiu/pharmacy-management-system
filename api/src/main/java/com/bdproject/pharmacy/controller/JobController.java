@@ -1,5 +1,6 @@
 package com.bdproject.pharmacy.controller;
 
+import com.bdproject.pharmacy.dto.request.JobRequest;
 import com.bdproject.pharmacy.model.JobEntity;
 import com.bdproject.pharmacy.service.JobService;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +17,13 @@ public class JobController {
     private final JobService jobService;
 
     @PostMapping(path = "pharmacy/jobs")
-    public ResponseEntity<Integer> createJob(@Valid @RequestParam String numePost, @Valid @RequestParam Integer salariu) {
-        return ResponseEntity.ok(jobService.createJob(numePost, salariu));
+    public ResponseEntity<Integer> createJob(@Valid @RequestBody JobRequest request) {
+        return ResponseEntity.ok(jobService.createJob(request));
     }
 
     @PutMapping(path = "pharmacy/jobs/{id}")
-    public ResponseEntity<Integer> updateJob(@PathVariable Integer id, @Valid @RequestParam String numePost, @Valid @RequestParam Integer salariu) {
-        return ResponseEntity.ok(jobService.updateJob(id, numePost, salariu));
+    public ResponseEntity<Integer> updateJob(@PathVariable Integer id, @Valid @RequestBody JobRequest request) {
+        return ResponseEntity.ok(jobService.updateJob(id, request));
     }
 
     @DeleteMapping(path = "pharmacy/jobs/{id}")
