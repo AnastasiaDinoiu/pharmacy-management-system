@@ -12,6 +12,10 @@ import AddDiagnose from "../pages/AddDiagnose";
 import {getDiagnoses} from "./DiagnoseTable";
 import {getDoctors} from "./DoctorTable";
 import AddDoctor from "../pages/AddDoctor";
+import AddProducer from "../pages/AddProducer";
+import {getProducers} from "./ProducerTable";
+import {getMedicines} from "./MedicineTable";
+import AddMedicine from "../pages/AddMedicine";
 
 const style = {
     position: 'absolute',
@@ -47,6 +51,12 @@ export default function TransitionModal(props) {
             case "doctors":
                 data = await getDoctors();
                 break
+            case "producers":
+                data = await getProducers();
+                break
+            case "medicines":
+                data = await getMedicines();
+                break
             default:
                 return []
         }
@@ -68,6 +78,10 @@ export default function TransitionModal(props) {
                 return <AddDiagnose/>
             case "doctors":
                 return <AddDoctor/>
+            case "producers":
+                return <AddProducer/>
+            case "medicines":
+                return <AddMedicine/>
             default:
                 return ""
         }

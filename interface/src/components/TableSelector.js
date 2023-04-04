@@ -5,11 +5,13 @@ import EmployeeTable from "./EmployeeTable";
 import JobTable from "./JobTable";
 import DiagnoseTable from "./DiagnoseTable";
 import DoctorTable from "./DoctorTable";
+import ProducerTable from "./ProducerTable";
+import MedicineTable from "./MedicineTable";
 
 export default function TableSelector() {
     const [tableData, setTableData] = useState(<PatientTable/>)
     const [dropdownTitle, setDropdownTitle] = useState('Alege tabelul')
-    const tables = ["Pacienti", "Angajati", "Posturi", "Diagnostice", "Medici prescriptori"]
+    const tables = ["Pacienti", "Angajati", "Posturi", "Diagnostice", "Medici prescriptori", "Producatori", "Medicamente"]
 
     function handleTableSelect(table) {
         // eslint-disable-next-line default-case
@@ -28,6 +30,12 @@ export default function TableSelector() {
                 break;
             case "Medici prescriptori":
                 setTableData(<DoctorTable/>)
+                break;
+            case "Producatori":
+                setTableData(<ProducerTable/>)
+                break;
+            case "Medicamente":
+                setTableData(<MedicineTable/>)
                 break;
         }
     }

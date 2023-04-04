@@ -67,7 +67,7 @@ export default function DiagnoseTable() {
                 <Table striped bordered hover>
                     <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>#</th>
                         <th>Denumire</th>
                     </tr>
                     </thead>

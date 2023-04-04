@@ -14,6 +14,10 @@ import AddDiagnose from "./pages/AddDiagnose";
 import UpdateDiagnose from "./pages/UpdateDiagnose";
 import AddDoctor from "./pages/AddDoctor";
 import UpdateDoctor from "./pages/UpdateDoctor";
+import AddProducer from "./pages/AddProducer";
+import UpdateProducer from "./pages/UpdateProducer";
+import AddMedicine from "./pages/AddMedicine";
+import UpdateMedicine from "./pages/UpdateMedicine";
 
 function App() {
     return (
@@ -32,6 +36,10 @@ function App() {
                         <Route path="diagnoses/:id" element={<UpdateDiagnose/>}/>
                         <Route path="add-doctor" element={<AddDoctor/>}/>
                         <Route path="doctors/:id" element={<UpdateDoctor/>}/>
+                        <Route path="add-producer" element={<AddProducer/>}/>
+                        <Route path="producers/:id" element={<UpdateProducer/>}/>
+                        <Route path="add-medicine" element={<AddMedicine/>}/>
+                        <Route path="medicines/:id" element={<UpdateMedicine/>}/>
                         <Route path="*" element={<NoPage/>}/>
                     </Route>
                 </Routes>

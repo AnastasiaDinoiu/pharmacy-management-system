@@ -2,10 +2,10 @@ import {Button, Container, Dropdown, DropdownButton, FormGroup, Modal} from "rea
 import Form from "react-bootstrap/Form";
 import React, {useEffect, useState} from 'react';
 import axiosClient from "../utils/axiosClient";
+import {getJobs} from "./JobTable";
 
 export default function EmployeeForm(props) {
     const [posturi, setPosturi] = useState([])
-    const [dropdownTitle, setDropdownTitle] = useState('Alege postul')
     const {
         nume,
         setNume,
@@ -27,19 +27,15 @@ export default function EmployeeForm(props) {
         setMessage,
         error,
         setError,
+        dropdownTitle,
+        setDropdownTitle,
         handleSubmit
     } = props;
 
     useEffect(() => {
-        (async function getJobs() {
-            try {
-                const {data} = await axiosClient().get('/jobs')
-                if (data) {
-                    setPosturi(data)
-                }
-            } catch (err) {
-                console.error(err)
-            }
+        (async function fetchJobs() {
+            const jobsData = await getJobs()
+            setPosturi(jobsData)
         })()
     }, [])
 

@@ -66,7 +66,7 @@ export default function EmployeeTable() {
                 <Table striped bordered hover>
                     <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>#</th>
                         <th>Nume</th>
                         <th>Prenume</th>
                         <th>CNP</th>

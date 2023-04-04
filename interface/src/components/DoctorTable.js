@@ -66,7 +66,7 @@ export default function DoctorTable() {
                 <Table striped bordered hover>
                     <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>#</th>
                         <th>Unitate medicala</th>
                         <th>Nume</th>
                         <th>Prenume</th>

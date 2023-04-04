@@ -1,12 +1,12 @@
-import {useEffect, useState} from "react";
-import {Button, Container, Modal, Table} from "react-bootstrap";
 import axiosClient from "../utils/axiosClient";
-import "./style.css"
+import {useEffect, useState} from "react";
+import {getPatients} from "./PatientTable";
+import {Button, Container, Modal, Table} from "react-bootstrap";
 import TransitionModal from "./TransitionModal";
 
-export const getPatients = async () => {
+export const getProducers = async () => {
     try {
-        const {data} = await axiosClient().get('/patients');
+        const {data} = await axiosClient().get('/producers');
         return data;
     } catch (err) {
         console.error(err);
@@ -14,29 +14,29 @@ export const getPatients = async () => {
     }
 }
 
-export default function PatientTable() {
-    const [patients, setPatients] = useState([])
+export default function ProducerTable() {
+    const [producers, setProducers] = useState([])
     const [showMessage, setShowMessage] = useState(false);
     const [showError, setShowError] = useState(false);
     const [message, setMessage] = useState("")
     const [error, setError] = useState("")
 
     useEffect(() => {
-        (async function fetchPatients() {
-            const patientsData = await getPatients();
-            setPatients(patientsData);
+        (async function fetchProducers() {
+            const producersData = await getProducers();
+            setProducers(producersData);
         })()
     }, [])
 
     const handleDelete = async (id) => {
         try {
-            const {status} = await axiosClient().delete(`patients/${id}`)
+            const {status} = await axiosClient().delete(`producers/${id}`)
             if (status === 200) {
-                setPatients(patients.filter(patient => patient.idPacient !== id))
-                setMessage(`Patient with ${id} id was successfully removed!`)
+                setProducers(producers.filter(producer => producer.idProducator !== id))
+                setMessage(`Producer with ${id} id was successfully removed!`)
                 setShowMessage(true);
             } else {
-                setError(`Patient with ${id} id not found!`)
+                setError(`Producer with ${id} id not found!`)
                 setShowError(true);
             }
         } catch (err) {
@@ -44,7 +44,6 @@ export default function PatientTable() {
             setShowError(true);
         }
     }
-
 
     return (
         <>
@@ -62,7 +61,7 @@ export default function PatientTable() {
                 <Modal.Body>{error}</Modal.Body>
             </Modal>
 
-            <TransitionModal table={"patients"} setObjects={setPatients}/>
+            <TransitionModal table={"producers"} setObjects={setProducers}/>
 
             <Container style={{paddingTop: '20px'}}>
                 <Table striped bordered hover>
@@ -70,23 +69,21 @@ export default function PatientTable() {
                     <tr>
                         <th>#</th>
                         <th>Nume</th>
-                        <th>Prenume</th>
-                        <th>CNP</th>
+                        <th>Tara</th>
                     </tr>
                     </thead>
                     <tbody>
                     {
-                        patients.map(
-                            patient => (
-                                <tr key={patient.idPacient}>
-                                    <td>{patient.idPacient}</td>
-                                    <td>{patient.numePacient}</td>
-                                    <td>{patient.prenumePacient}</td>
-                                    <td>{patient.cnpPacient}</td>
+                        producers.map(
+                            producer => (
+                                <tr key={producer.idProducator}>
+                                    <td>{producer.idProducator}</td>
+                                    <td>{producer.numeProducator}</td>
+                                    <td>{producer.tara}</td>
                                     <td><Button className="deleteButton"
-                                                onClick={() => handleDelete(patient.idPacient)}>Delete</Button></td>
+                                                onClick={() => handleDelete(producer.idProducator)}>Delete</Button></td>
                                     <td><Button className="updateButton"
-                                                href={`patients/${patient.idPacient}`}>Update</Button></td>
+                                                href={`producers/${producer.idProducator}`}>Update</Button></td>
                                 </tr>
                             ))
                     }

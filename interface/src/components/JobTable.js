@@ -66,7 +66,7 @@ export default function JobTable() {
                 <Table striped bordered hover>
                     <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>#</th>
                         <th>Nume</th>
                         <th>Salariu</th>
                     </tr>

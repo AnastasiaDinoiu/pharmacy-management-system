@@ -9,6 +9,7 @@ export default function AddEmployee() {
     const [idPost, setIdPost] = useState(0)
     const [email, setEmail] = useState('')
     const [telefon, setTelefon] = useState('')
+    const [dropdownTitle, setDropdownTitle] = useState('Alege postul')
 
     const [showMessage, setShowMessage] = useState(false);
     const [showError, setShowError] = useState(false);
@@ -101,6 +102,8 @@ export default function AddEmployee() {
                 setMessage={setMessage}
                 error={error}
                 setError={setError}
+                dropdownTitle={dropdownTitle}
+                setDropdownTitle={setDropdownTitle}
                 handleSubmit={handleSubmit}
             />
         </>

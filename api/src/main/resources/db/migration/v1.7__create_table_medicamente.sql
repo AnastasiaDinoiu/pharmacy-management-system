@@ -1,6 +1,6 @@
 -- Crearea tabelului MEDICAMENTE
 CREATE TABLE medicamente (
-                             id_medicament INT,
+                             id_medicament INT NOT NULL AUTO_INCREMENT,
                              CONSTRAINT MED_id_med_PK PRIMARY KEY(id_medicament),
                              dci VARCHAR(50) NOT NULL,
                              denumire_comerciala VARCHAR(30) NOT NULL,

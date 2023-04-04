@@ -11,6 +11,7 @@ export default function UpdateEmployee() {
     const [idPost, setIdPost] = useState(0)
     const [email, setEmail] = useState('')
     const [telefon, setTelefon] = useState('')
+    const [dropdownTitle, setDropdownTitle] = useState('')
 
     const [showMessage, setShowMessage] = useState(false);
     const [showError, setShowError] = useState(false);
@@ -26,6 +27,7 @@ export default function UpdateEmployee() {
                     setPrenume(data.prenumeAngajat)
                     setCnp(data.cnpAngajat)
                     setIdPost(data.post.idPost)
+                    setDropdownTitle(data.post.numePost)
                     setEmail(data.emailAngajat)
                     setTelefon(data.telefonAngajat)
                 }
@@ -119,6 +121,8 @@ export default function UpdateEmployee() {
                 setMessage={setMessage}
                 error={error}
                 setError={setError}
+                dropdownTitle={dropdownTitle}
+                setDropdownTitle={setDropdownTitle}
                 handleSubmit={handleSubmit}
             />
         </>
