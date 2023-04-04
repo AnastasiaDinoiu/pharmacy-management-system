@@ -1,12 +1,13 @@
-import {useState} from "react";
-import EmployeeForm from "../components/EmployeeForm";
+import {useEffect, useState} from "react";
 import axiosClient from "../utils/axiosClient";
+import DoctorForm from "../components/DoctorForm";
 
-export default function AddEmployee() {
+export default function UpdateDoctor() {
+    const url = window.location.href.split('/')
+    const id = url[url.length - 1]
+    const [unitateMedicala, setUnitateMedicala] = useState('')
     const [nume, setNume] = useState('')
     const [prenume, setPrenume] = useState('')
-    const [cnp, setCnp] = useState('')
-    const [idPost, setIdPost] = useState(0)
     const [email, setEmail] = useState('')
     const [telefon, setTelefon] = useState('')
 
@@ -15,8 +16,31 @@ export default function AddEmployee() {
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
 
+    useEffect(() => {
+        (async function getPatient() {
+            try {
+                const {data} = await axiosClient().get(`/doctors/${id}`)
+                if (data) {
+                    setUnitateMedicala(data.unitateMedicala)
+                    setNume(data.numeMedicPrescriptor)
+                    setPrenume(data.prenumeMedicPrescriptor)
+                    setEmail(data.emailMedicPrescriptor)
+                    setTelefon(data.telefonMedicPrescriptor)
+                }
+            } catch (err) {
+                console.error(err)
+            }
+        })()
+    }, [])
+
     const handleSubmit = async (event) => {
         event.preventDefault()
+
+        if (unitateMedicala.length < 3) {
+            setError('Unitatea medicala trebuie sa aiba minim 3 caractere')
+            setShowError(true);
+            return
+        }
         if (nume.length < 3) {
             setError('Numele trebuie sa aiba minim 3 caractere')
             setShowError(true);
@@ -24,18 +48,6 @@ export default function AddEmployee() {
         }
         if (prenume.length < 3) {
             setError('Prenumele trebuie sa aiba minim 3 caractere')
-            setShowError(true);
-            return
-        }
-        let strCnp = cnp.toString()
-        if (strCnp.length !== 13) {
-            setError('CNP invalid')
-            setShowError(true);
-            return
-        }
-        const data = await axiosClient().get(`/jobs/${idPost}`)
-        if (!data) {
-            setError('Post invalid')
             setShowError(true);
             return
         }
@@ -51,20 +63,18 @@ export default function AddEmployee() {
         }
 
         try {
-            const response = await axiosClient().post('/employees', {
+            const response = await axiosClient().put(`/doctors/${id}`, {
+                unitateMedicala,
                 nume,
                 prenume,
-                cnp,
-                idPost,
                 email,
                 telefon
             })
             if (response.status === 200) {
-                setMessage('Angajatul a fost inregistrat!')
+                setMessage('Datele medicului au fost modificate!')
+                setUnitateMedicala('')
                 setNume('')
                 setPrenume('')
-                setCnp('')
-                setIdPost(0)
                 setEmail('')
                 setTelefon('')
                 setShowMessage(true);
@@ -80,15 +90,13 @@ export default function AddEmployee() {
 
     return (
         <>
-            <EmployeeForm
+            <DoctorForm
+                unitateMedicala={unitateMedicala}
+                setUnitateMedicala={setUnitateMedicala}
                 nume={nume}
                 setNume={setNume}
                 prenume={prenume}
                 setPrenume={setPrenume}
-                cnp={cnp}
-                setCnp={setCnp}
-                idPost={idPost}
-                setIdPost={setIdPost}
                 email={email}
                 setEmail={setEmail}
                 telefon={telefon}

@@ -3,11 +3,13 @@ import {Container, Dropdown, DropdownButton, FormGroup} from "react-bootstrap";
 import PatientTable from "./PatientTable";
 import EmployeeTable from "./EmployeeTable";
 import JobTable from "./JobTable";
+import DiagnoseTable from "./DiagnoseTable";
+import DoctorTable from "./DoctorTable";
 
 export default function TableSelector() {
     const [tableData, setTableData] = useState(<PatientTable/>)
     const [dropdownTitle, setDropdownTitle] = useState('Alege tabelul')
-    const tables = ["Pacienti", "Angajati", "Posturi"]
+    const tables = ["Pacienti", "Angajati", "Posturi", "Diagnostice", "Medici prescriptori"]
 
     function handleTableSelect(table) {
         // eslint-disable-next-line default-case
@@ -20,6 +22,12 @@ export default function TableSelector() {
                 break;
             case "Posturi":
                 setTableData(<JobTable/>)
+                break;
+            case "Diagnostice":
+                setTableData(<DiagnoseTable/>)
+                break;
+            case "Medici prescriptori":
+                setTableData(<DoctorTable/>)
                 break;
         }
     }

@@ -1,41 +1,42 @@
-import {useEffect, useState} from "react";
 import axiosClient from "../utils/axiosClient";
+import {useEffect, useState} from "react";
 import {Button, Container, Modal, Table} from "react-bootstrap";
+import "./style.css"
 import TransitionModal from "./TransitionModal";
 
-export const getEmployees = async () => {
+export const getDiagnoses = async () => {
     try {
-        const {data} = await axiosClient().get('/employees')
-        return data;
+        const {data} = await axiosClient().get('/diagnoses')
+        return data
     } catch (err) {
         console.error(err)
         return []
     }
 }
 
-export default function EmployeeTable() {
-    const [employees, setEmployees] = useState([])
+export default function DiagnoseTable() {
+    const [diagnoses, setDiagnoses] = useState([])
     const [showMessage, setShowMessage] = useState(false)
     const [showError, setShowError] = useState(false)
     const [message, setMessage] = useState('')
     const [error, setError] = useState('')
 
     useEffect(() => {
-        (async function fetchEmployees() {
-            const employeesData = await getEmployees()
-            setEmployees(employeesData)
+        (async function fetchDiagnoses() {
+            const diagnosesData = await getDiagnoses()
+            setDiagnoses(diagnosesData)
         })()
     }, [])
 
     const handleDelete = async (id) => {
         try {
-            const {status} = await axiosClient().delete(`employees/${id}`)
+            const {status} = await axiosClient().delete(`diagnoses/${id}`)
             if (status === 200) {
-                setEmployees(employees.filter(employee => employee.idAngajat !== id))
-                setMessage(`Employee with ${id} id was successfully removed!`)
+                setDiagnoses(diagnoses.filter(diagnose => diagnose.idDiagnostic !== id))
+                setMessage(`Diagnose with ${id} id was successfully removed!`)
                 setShowMessage(true)
             } else {
-                setError(`Employee with ${id} id not found!`)
+                setError(`Diagnose with ${id} id not found!`)
                 setShowError(true)
             }
         } catch (err) {
@@ -60,37 +61,29 @@ export default function EmployeeTable() {
                 <Modal.Body>{error}</Modal.Body>
             </Modal>
 
-            <TransitionModal table={"employees"} setObjects={setEmployees}/>
+            <TransitionModal table={"diagnoses"} setObjects={setDiagnoses}/>
 
             <Container style={{paddingTop: '20px'}}>
                 <Table striped bordered hover>
                     <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Nume</th>
-                        <th>Prenume</th>
-                        <th>CNP</th>
-                        <th>Post</th>
-                        <th>Email</th>
-                        <th>Telefon</th>
+                        <th>Denumire</th>
                     </tr>
                     </thead>
                     <tbody>
                     {
-                        employees.map(
-                            employee => (
-                                <tr key={employee.idAngajat}>
-                                    <td>{employee.idAngajat}</td>
-                                    <td>{employee.numeAngajat}</td>
-                                    <td>{employee.prenumeAngajat}</td>
-                                    <td>{employee.cnpAngajat}</td>
-                                    <td>{employee.post.numePost}</td>
-                                    <td>{employee.emailAngajat}</td>
-                                    <td>{employee.telefonAngajat}</td>
+                        diagnoses
+                            .sort((a, b) => a.idDiagnostic - b.idDiagnostic)
+                            .map(
+                            diagnose => (
+                                <tr key={diagnose.idDiagnostic}>
+                                    <td>{diagnose.idDiagnostic}</td>
+                                    <td>{diagnose.numeDiagnostic}</td>
                                     <td><Button className="deleteButton"
-                                                onClick={() => handleDelete(employee.idAngajat)}>Delete</Button></td>
+                                                onClick={() => handleDelete(diagnose.idDiagnostic)}>Delete</Button></td>
                                     <td><Button className="updateButton"
-                                                href={`employees/${employee.idAngajat}`}>Update</Button></td>
+                                                href={`diagnoses/${diagnose.idDiagnostic}`}>Update</Button></td>
                                 </tr>
                             ))
                     }

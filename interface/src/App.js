@@ -10,6 +10,10 @@ import AddEmployee from "./pages/AddEmployee";
 import UpdateEmployee from "./pages/UpdateEmployee";
 import AddJob from "./pages/AddJob";
 import UpdateJob from "./pages/UpdateJob";
+import AddDiagnose from "./pages/AddDiagnose";
+import UpdateDiagnose from "./pages/UpdateDiagnose";
+import AddDoctor from "./pages/AddDoctor";
+import UpdateDoctor from "./pages/UpdateDoctor";
 
 function App() {
     return (
@@ -24,6 +28,10 @@ function App() {
                         <Route path="employees/:id" element={<UpdateEmployee/>}/>
                         <Route path="add-job" element={<AddJob/>}/>
                         <Route path="jobs/:id" element={<UpdateJob/>}/>
+                        <Route path="add-diagnose" element={<AddDiagnose/>}/>
+                        <Route path="diagnoses/:id" element={<UpdateDiagnose/>}/>
+                        <Route path="add-doctor" element={<AddDoctor/>}/>
+                        <Route path="doctors/:id" element={<UpdateDoctor/>}/>
                         <Route path="*" element={<NoPage/>}/>
                     </Route>
                 </Routes>

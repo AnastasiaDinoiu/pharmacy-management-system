@@ -37,7 +37,7 @@ public class PrescribingDoctorServiceImpl implements PrescribingDoctorService {
         var updatedDoctor = doctorRequestToEntity(request);
         updatedDoctor.setIdMedicPrescriptor(idDoctor);
 
-        return doctorRepository.save(doctorRequestToEntity(request)).getIdMedicPrescriptor();
+        return doctorRepository.save(updatedDoctor).getIdMedicPrescriptor();
     }
 
     @Override
